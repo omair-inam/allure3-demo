@@ -1,0 +1,55 @@
+name: Build project
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.QAMETA_CI }}
+
+      - name: "Configure CI Git User"
+        run: |
+          git config --global user.name qameta-ci
+          git config --global user.email qameta-ci@qameta.io
+
+      - name: Enable Corepack
+        run: corepack enable pnpm
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install playwright
+        run: pnpx playwright install
+
+      - name: Install playwright deps
+        run: pnpx playwright install-deps
+
+      - name: Test Project
+        run: pnpm t
+        continue-on-error: true
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          exclude_assets: ""
