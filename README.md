@@ -1,17 +1,5 @@
 # Allure 3 Demo Project
 
-A comprehensive demonstration of Allure 3 test reporting capabilities, showcasing integration with multiple testing frameworks and advanced reporting features.
-
-## 🎯 What This Demo Showcases
-
-This project demonstrates:
-- **Multi-framework Integration**: Playwright for E2E tests and Vitest for unit tests
-- **Advanced Reporting**: Multiple report formats including Awesome, Classic, Dashboard, and CSV
-- **Cross-browser Testing**: E2E tests running on Chrome, Firefox, and Safari
-- **Rich Test Metadata**: Attachments, steps, labels, and test categorization
-- **History Tracking**: Test execution history across multiple runs
-- **Custom Filtering**: Environment-based test filtering and custom report layouts
-
 ## 📋 Prerequisites
 
 - **Node.js** (v18 or higher)
